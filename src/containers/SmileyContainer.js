@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { sendText } from '../store/actions';
 import SmileyComponent from '../components/SmileyComponent';
 import { sentimentScoreSelector } from '../store/reducer';
 
