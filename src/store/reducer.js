@@ -1,5 +1,5 @@
 import Immutable from 'seamless-immutable';
-import { SCORE_FETCHED, SEND_TEXT } from './actions';
+import {SEND_TEXT, RECEIVED_RESPONSE, FAILED_FETCH } from './actions';
 
 // Shape of the state:
 //  {
@@ -10,8 +10,8 @@ import { SCORE_FETCHED, SEND_TEXT } from './actions';
 
 const initialState = Immutable(
     {
-        polarity: 0.0,
-        certainty: 0.0,
+        polarity: 0.5,
+        certainty: 0.5,
         status: "done"
     }
 )
@@ -19,25 +19,15 @@ const initialState = Immutable(
 const scores = (state = initialState, action = {}) => {
     switch (action.type){
         case SEND_TEXT:
-            if (action.text.includes('happy')){
-                return state.merge({
-                    polarity: 1,
-                    certainty: 1
-                })
-            }
-            else if (action.text.includes('sad')) {
-                return state.merge({
-                    polarity: -1,
-                    certainty: 1
-                })
-            }
-            else {
-                return state.merge({
-                    polarity: 0,
-                    certainty: 0
-                })
-            }
-
+            return state.merge({status: "fetching"});
+        case FAILED_FETCH:
+            return state.merge({status: "failed"});
+        case RECEIVED_RESPONSE:
+            return state.merge({ 
+                polarity: action.polarity,
+                certainty: action.certainty,
+                status: "done"
+            });            
         default:
             return state;
     }

@@ -1,32 +1,45 @@
 import sentimentService from '../services/sentiment';
 
-export const SCORE_FETCHED = 'SCORE_FETCHED';
 export const SEND_TEXT = 'SEND_TEXT';
+export const RECEIVED_RESPONSE = 'RECEIVED_RESPONSE';
+export const FAILED_FETCH = 'FAILED_FETCH';
 
-export function receiveScore(scores){
+
+export function receivedScore(scoresJson){
     return {
-        type: SCORE_FETCHED,
-        scores
+        type: RECEIVED_RESPONSE,
+        polarity: scoresJson.Response[0],
+        certainty: scoresJson.Response[1]
     }
 }
 
-export function sendText(text){
+export function sendText(){
     return {
         type: SEND_TEXT,
-        text: text
     }
 }
 
 
-// export function fetchScore(textBody) {
+export function failedFetch(text){
+    return {
+        type: FAILED_FETCH,
+    }
+}
 
-//     return async(dispatch) => {
-//         try {
-//             const scores = await SentimentService.getScores();
-//             } 
-//             catch (error) {
-//                 console.error(error);
-//             }
-//     };
 
-// }
+export function fetchScore(textBody) {
+    
+    return async(dispatch) => {
+        dispatch(sendText());
+        try {
+            const scores = await sentimentService.getScores(textBody);
+            console.log(scores);
+            dispatch(receivedScore(scores));
+            } 
+            catch (error) {
+                console.error(error);
+                dispatch(failedFetch);
+            }
+    };
+
+}

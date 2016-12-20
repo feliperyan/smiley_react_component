@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { sendText } from '../store/actions'
+import { fetchScore } from '../store/actions'
 
 
 const TextContainer = ({ dispatch }) => {
@@ -14,7 +14,7 @@ const TextContainer = ({ dispatch }) => {
                     if (!input.value.trim()) {
                         return;
                     }
-                    dispatch(sendText(input.value));
+                    dispatch(fetchScore(input.value));
                     input.value = '';
                 }
             }>
