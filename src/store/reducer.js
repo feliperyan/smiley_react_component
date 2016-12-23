@@ -1,17 +1,11 @@
 import Immutable from 'seamless-immutable';
 import {SEND_TEXT, RECEIVED_RESPONSE, FAILED_FETCH } from './actions';
 
-// Shape of the state:
-//  {
-//      polarity: 0.5,
-//      certainty: 0.3,
-//      status: "done" or "fetching"
-//  }
 
 const initialState = Immutable(
     {
-        polarity: 0.5,
-        certainty: 0.5,
+        polarity: 0.0,
+        certainty: 0.0,
         status: "done"
     }
 )
@@ -42,4 +36,8 @@ export function sentimentScoreSelector(state){
         pola: state.polarity,
         cert: state.certainty
     }
+}
+
+export function getStatus(state){
+    return state.status;
 }

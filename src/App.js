@@ -4,7 +4,7 @@ import './App.css';
 
 import SmileyContainer from './containers/SmileyContainer';
 import TextContainer from './containers/TextContainer';
-
+import StatusContainer from './containers/StatusContainer';
 
 class App extends Component {
   render() {
@@ -22,6 +22,7 @@ class App extends Component {
 
         <SmileyContainer />
         <TextContainer />
+        <StatusContainer />
 
       </div>
     );
